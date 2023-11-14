@@ -3,6 +3,7 @@ package ru.github.abdullinru.bankapp.bankApp.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,6 +22,7 @@ public class History {
     private OperationType type;
     private Long senderId;
     private Long receiveId;
+    private BigDecimal changeBalance;
 
 
     private enum OperationType {
