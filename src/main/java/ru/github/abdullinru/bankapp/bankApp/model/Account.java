@@ -8,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "accounts")
-@NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -24,4 +23,14 @@ public class Account {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
+    public Account(Long id, String number, BigDecimal balance, Owner owner) {
+        this.id = id;
+        this.number = number;
+        this.balance = balance;
+        this.owner = owner;
+    }
+
+    public Account() {
+
+    }
 }

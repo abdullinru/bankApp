@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "histories")
-@NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -24,9 +23,16 @@ public class History {
     private Long receiveId;
     private BigDecimal changeBalance;
 
-
-    private enum OperationType {
-        deposit, withdraw
+    public History(Long id, LocalDateTime dateTime, OperationType type, Long senderId, Long receiveId, BigDecimal changeBalance) {
+        this.id = id;
+        this.dateTime = dateTime;
+        this.type = type;
+        this.senderId = senderId;
+        this.receiveId = receiveId;
+        this.changeBalance = changeBalance;
     }
 
+    public History() {
+
+    }
 }
