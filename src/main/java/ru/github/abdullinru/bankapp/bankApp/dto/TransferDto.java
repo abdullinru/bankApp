@@ -1,4 +1,8 @@
 package ru.github.abdullinru.bankapp.bankApp.dto;
 
-public class TransferDto {
+import java.math.BigDecimal;
+
+public record TransferDto (long senderId, long receiverId, BigDecimal amount, String pin){
+
+
 }

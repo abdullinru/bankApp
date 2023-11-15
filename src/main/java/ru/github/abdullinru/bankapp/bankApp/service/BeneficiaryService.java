@@ -49,7 +49,7 @@ public class BeneficiaryService {
         }
     }
     private void checkPin(String pinCode) {
-        if (!pinCode.matches("\\d{4}")) {
+        if (pinCode == null || !pinCode.matches("\\d{4}")) {
             throw new IllegalArgumentException("incorrect pincode");
         }
     }

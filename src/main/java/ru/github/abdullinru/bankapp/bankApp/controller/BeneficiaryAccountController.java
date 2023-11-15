@@ -15,7 +15,7 @@ import ru.github.abdullinru.bankapp.bankApp.service.BeneficiaryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/bank")
+@RequestMapping("/api/beneficiary")
 public class BeneficiaryAccountController {
 
     private final BeneficiaryService beneficiaryService;
