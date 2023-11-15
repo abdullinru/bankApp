@@ -1,6 +1,6 @@
 -- liquebase formatted sql
 -- changeset abdullinru:1
-create table owners
+create table Beneficiaries
 (
     id         BigSerial      primary key,
     name       varchar        not null unique,
@@ -11,7 +11,7 @@ create table accounts
     id         BigSerial    primary key,
     number     varchar      not null,
     balance    numeric      not null,
-    owner_id   BigSerial    REFERENCES owners (id)
+    owner_id   BigSerial    REFERENCES Beneficiaries (id)
 );
 create table histories
 (

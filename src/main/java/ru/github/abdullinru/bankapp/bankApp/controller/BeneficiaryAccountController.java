@@ -8,21 +8,20 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import ru.github.abdullinru.bankapp.bankApp.dto.RequestOwnerDto;
-import ru.github.abdullinru.bankapp.bankApp.dto.ResponseOwnerDto;
-import ru.github.abdullinru.bankapp.bankApp.service.AccountService;
-import ru.github.abdullinru.bankapp.bankApp.service.OwnerService;
+import ru.github.abdullinru.bankapp.bankApp.dto.RequestBeneficiaryDto;
+import ru.github.abdullinru.bankapp.bankApp.dto.ResponseBeneficiaryDto;
+import ru.github.abdullinru.bankapp.bankApp.service.BeneficiaryService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/bank")
-public class OwnerAccountController {
+public class BeneficiaryAccountController {
 
-    private final OwnerService ownerService;
+    private final BeneficiaryService beneficiaryService;
 
-    public OwnerAccountController(OwnerService ownerService) {
-        this.ownerService = ownerService;
+    public BeneficiaryAccountController(BeneficiaryService beneficiaryService) {
+        this.beneficiaryService = beneficiaryService;
     }
 
     @Operation(summary = "Получить всех владельцев счетов",
@@ -30,11 +29,11 @@ public class OwnerAccountController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseOwnerDto.class)))
+                            schema = @Schema(implementation = ResponseBeneficiaryDto.class)))
     })
     @GetMapping
-    public List<ResponseOwnerDto> getAllOwners() {
-        return ownerService.getAllOwnres();
+    public List<ResponseBeneficiaryDto> getAllBeneficiaries() {
+        return beneficiaryService.getAllBeneficiaries();
     }
 
     @Operation(summary = "Создать владельца счета",
@@ -42,11 +41,11 @@ public class OwnerAccountController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseOwnerDto.class))),
+                            schema = @Schema(implementation = ResponseBeneficiaryDto.class))),
             @ApiResponse(responseCode = "400", description = "illegal arguments: pin-code or name")})
     @PostMapping
-    public ResponseEntity<ResponseOwnerDto> createOwner(@RequestBody RequestOwnerDto ownerDto) {
-        ResponseOwnerDto result = ownerService.createOwner(ownerDto);
+    public ResponseEntity<ResponseBeneficiaryDto> createBeneficiary(@RequestBody RequestBeneficiaryDto ownerDto) {
+        ResponseBeneficiaryDto result = beneficiaryService.createBeneficiary(ownerDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
@@ -55,13 +54,13 @@ public class OwnerAccountController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ResponseOwnerDto.class))),
+                            schema = @Schema(implementation = ResponseBeneficiaryDto.class))),
             @ApiResponse(responseCode = "404", description = "owner is not found by id"),
             @ApiResponse(responseCode = "400", description = "illegal arguments: pin code is not correct or not match")})
     @PostMapping("/{id}")
-    public ResponseEntity<ResponseOwnerDto> createAccount(
+    public ResponseEntity<ResponseBeneficiaryDto> createBeneficiaryAccount(
             @RequestBody String pin, @PathVariable Long id) {
-        ResponseOwnerDto result = ownerService.createOwnerAccount(id, pin);
+        ResponseBeneficiaryDto result = beneficiaryService.createBeneficiaryAccount(id, pin);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 

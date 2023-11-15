@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Random;
 
 @Entity
 @Table(name = "accounts")
@@ -22,13 +20,13 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private Owner owner;
+    private Beneficiary beneficiary;
 
-    public Account(Long id, String number, BigDecimal balance, Owner owner) {
+    public Account(Long id, String number, BigDecimal balance, Beneficiary beneficiary) {
         this.id = id;
         this.number = number;
         this.balance = balance;
-        this.owner = owner;
+        this.beneficiary = beneficiary;
     }
 
     public String generateRandomAccountNumber() {

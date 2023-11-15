@@ -1,4 +1,4 @@
 package ru.github.abdullinru.bankapp.bankApp.dto;
 
-public class OwnerDto {
+public class BeneficiaryDto {
 }

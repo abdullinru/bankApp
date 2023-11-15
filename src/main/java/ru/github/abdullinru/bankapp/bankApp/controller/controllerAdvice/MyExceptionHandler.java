@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.github.abdullinru.bankapp.bankApp.exception.OwnerNotFoundException;
+import ru.github.abdullinru.bankapp.bankApp.exception.BeneficiaryNotFoundException;
 
 @ControllerAdvice
 public class MyExceptionHandler {
@@ -21,8 +21,8 @@ public class MyExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(String.format("Error: %s", e.getMessage()));
     }
-    @ExceptionHandler(OwnerNotFoundException.class)
-    public ResponseEntity<String> handlerException (OwnerNotFoundException e) {
+    @ExceptionHandler(BeneficiaryNotFoundException.class)
+    public ResponseEntity<String> handlerException (BeneficiaryNotFoundException e) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(String.format("Error: %s", e.getMessage()));
