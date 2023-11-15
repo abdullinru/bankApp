@@ -1,7 +1,9 @@
 package ru.github.abdullinru.bankapp.bankApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 import java.util.List;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode
 @ToString
+@NamedEntityGraph(name = "owner_entity-graph", attributeNodes = @NamedAttributeNode("accounts"))
 public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

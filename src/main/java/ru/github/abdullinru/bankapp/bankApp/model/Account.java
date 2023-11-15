@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 @Table(name = "accounts")
@@ -30,6 +31,14 @@ public class Account {
         this.owner = owner;
     }
 
+    public String generateRandomAccountNumber() {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            int random = (int) (1000 + Math.random() * (9999 - 1000));
+            result.append(random).append(" ");
+        }
+        return result.toString().trim();
+    }
     public Account() {
 
     }

@@ -27,15 +27,15 @@ public class BankAppApplication {
 			AccountRepository accountRepository,
 			HistoryRepository historyRepository) {
 		return (args) -> {
-			Owner ruslan = new Owner(1L, "ruslan", "1111");
-			Owner sergey = new Owner(2L, "Sergey", "2222");
-			Owner olia = new Owner(3L, "Olia", "3333");
-			Account ruslanAccount = new Account(1L, "1111 2222 3333 4444", BigDecimal.valueOf(1000), ruslan);
-			Account sergeyAccount = new Account(2L, "2222 3333 4444 5555", BigDecimal.valueOf(2000), sergey);
-			Account oliaAccount = new Account(3L, "3333 4444 5555 6666", BigDecimal.valueOf(3000), olia);
-			History log1 = new History(1L, LocalDateTime.now(), OperationType.deposit, 0L, 2L, BigDecimal.valueOf(100));
-			History log2 = new History(2L, LocalDateTime.now(), OperationType.withdraw, 1L, 0L, BigDecimal.valueOf(100));
-			History log3 = new History(3L, LocalDateTime.now(), OperationType.transfer, 1L, 2L, BigDecimal.valueOf(100));
+			Owner ruslan = new Owner(100L, "ruslan", "1111");
+			Owner sergey = new Owner(200L, "Sergey", "2222");
+			Owner olia = new Owner(300L, "Olia", "3333");
+			Account ruslanAccount = new Account(100L, "1111 2222 3333 4444", BigDecimal.valueOf(1000), ruslan);
+			Account sergeyAccount = new Account(200L, "2222 3333 4444 5555", BigDecimal.valueOf(2000), sergey);
+			Account oliaAccount = new Account(300L, "3333 4444 5555 6666", BigDecimal.valueOf(3000), olia);
+			History log1 = new History(100L, LocalDateTime.now(), OperationType.deposit, 0L, 200L, BigDecimal.valueOf(100));
+			History log2 = new History(200L, LocalDateTime.now(), OperationType.withdraw, 100L, 0L, BigDecimal.valueOf(150));
+			History log3 = new History(300L, LocalDateTime.now(), OperationType.transfer, 100L, 200L, BigDecimal.valueOf(99));
 			ownerRepository.save(ruslan);
 			ownerRepository.save(sergey);
 			ownerRepository.save(olia);
