@@ -24,7 +24,6 @@ public class TransferService {
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    //@Lock(LockModeType.PESSIMISTIC_READ)
     public ResponseAccountDto transfer(TransferDto transferDto) {
         Long senderId = transferDto.senderId();
         Long receiverId = transferDto.receiverId();

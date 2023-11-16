@@ -27,7 +27,6 @@ public class BalanceService {
         this.mapper = mapper;
     }
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    //@Lock(LockModeType.PESSIMISTIC_READ)
     public ResponseAccountDto deposit(Long accountId, BigDecimal amount, boolean isTransfer) {
         chechAmount(amount);
         Account findAccount = accountRepository.findById(accountId)
@@ -55,7 +54,6 @@ public class BalanceService {
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    //@Lock(LockModeType.PESSIMISTIC_READ)
     public ResponseAccountDto withdraw(Long accountId, BigDecimal amount, String pin, boolean isTransfer) {
         chechAmount(amount);
         checkPin(pin);
