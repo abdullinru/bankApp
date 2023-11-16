@@ -31,12 +31,12 @@ public class TransferService {
         BigDecimal amount = transferDto.amount();
         String pin = transferDto.pin();
 
-        History historyLog = new History();
-        historyLog.setChangeBalance(amount);
-        historyLog.setReceiverId(receiverId);
-        historyLog.setSenderId(senderId);
-        historyLog.setDateTime(LocalDateTime.now());
-        historyLog.setType(OperationType.transfer);
+        History historyLog = new History(
+                LocalDateTime.now(),
+                OperationType.transfer,
+                senderId,
+                receiverId,
+                amount);
         historyRepository.save(historyLog);
 
         balanceService.withdraw(senderId, amount, pin, true);

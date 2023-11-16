@@ -22,8 +22,7 @@ public class Account {
     @JoinColumn(name = "owner_id")
     private Beneficiary beneficiary;
 
-    public Account(Long id, String number, BigDecimal balance, Beneficiary beneficiary) {
-        this.id = id;
+    public Account(String number, BigDecimal balance, Beneficiary beneficiary) {
         this.number = number;
         this.balance = balance;
         this.beneficiary = beneficiary;

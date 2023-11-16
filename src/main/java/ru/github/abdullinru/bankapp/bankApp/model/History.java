@@ -23,8 +23,7 @@ public class History {
     private Long receiverId;
     private BigDecimal changeBalance;
 
-    public History(Long id, LocalDateTime dateTime, OperationType type, Long senderId, Long receiverId, BigDecimal changeBalance) {
-        this.id = id;
+    public History(LocalDateTime dateTime, OperationType type, Long senderId, Long receiverId, BigDecimal changeBalance) {
         this.dateTime = dateTime;
         this.type = type;
         this.senderId = senderId;

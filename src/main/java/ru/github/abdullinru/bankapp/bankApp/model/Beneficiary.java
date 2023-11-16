@@ -22,8 +22,7 @@ public class Beneficiary {
     @OneToMany(mappedBy = "beneficiary", cascade = CascadeType.ALL)
     private List<Account> accounts;
 
-    public Beneficiary(Long id, String name, String pin) {
-        this.id = id;
+    public Beneficiary(String name, String pin) {
         this.name = name;
         this.pin = pin;
     }

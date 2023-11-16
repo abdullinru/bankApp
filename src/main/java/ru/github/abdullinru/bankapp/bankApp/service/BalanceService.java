@@ -36,12 +36,12 @@ public class BalanceService {
         accountRepository.save(findAccount);
 
         if (!isTransfer) {
-            History historyLog = new History();
-            historyLog.setChangeBalance(amount);
-            historyLog.setReceiverId(accountId);
-            historyLog.setSenderId(null);
-            historyLog.setDateTime(LocalDateTime.now());
-            historyLog.setType(OperationType.deposit);
+            History historyLog = new History(
+                    LocalDateTime.now(),
+                    OperationType.deposit,
+                    null,
+                    accountId,
+                    amount);
             historyRepository.save(historyLog);
         }
 
@@ -72,12 +72,12 @@ public class BalanceService {
 
 
         if (!isTransfer) {
-            History historyLog = new History();
-            historyLog.setChangeBalance(amount);
-            historyLog.setReceiverId(null);
-            historyLog.setSenderId(accountId);
-            historyLog.setDateTime(LocalDateTime.now());
-            historyLog.setType(OperationType.withdraw);
+            History historyLog = new History(
+                    LocalDateTime.now(),
+                    OperationType.withdraw,
+                    accountId,
+                    null,
+                    amount);
             historyRepository.save(historyLog);
         }
 
