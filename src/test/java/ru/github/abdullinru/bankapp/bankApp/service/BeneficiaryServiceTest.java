@@ -15,7 +15,6 @@ import ru.github.abdullinru.bankapp.bankApp.exception.BeneficiaryNotFoundExcepti
 import ru.github.abdullinru.bankapp.bankApp.mapper.BeneficiaryMapper;
 import ru.github.abdullinru.bankapp.bankApp.model.Account;
 import ru.github.abdullinru.bankapp.bankApp.model.Beneficiary;
-import ru.github.abdullinru.bankapp.bankApp.repository.AccountRepository;
 import ru.github.abdullinru.bankapp.bankApp.repository.BeneficiaryRepository;
 
 import java.math.BigDecimal;
@@ -31,7 +30,7 @@ class BeneficiaryServiceTest {
     @Mock
     private BeneficiaryRepository beneficiaryRepository;
     @Mock
-    private AccountRepository accountRepository;
+    private AccountService accountService;
     @Spy
     private BeneficiaryMapper mapper;
     @InjectMocks
@@ -71,7 +70,8 @@ class BeneficiaryServiceTest {
         ResponseBeneficiaryDto responseRuslanDto = new ResponseBeneficiaryDto(1L, "ruslan", "1111", List.of(ruslanAccountDto));
 
         Mockito.when(beneficiaryRepository.save(ruslan)).thenReturn(ruslan);
-        Mockito.when(accountRepository.save(any(Account.class))).thenReturn(ruslanAccount);
+        Mockito.when(accountService.createAccount()).thenReturn(ruslanAccount);
+        Mockito.when(accountService.save(ruslanAccount)).thenReturn(ruslanAccount);
         Mockito.when(mapper.toResponseBeneficiaryDto(ruslan)).thenReturn(responseRuslanDto);
 
         Assertions.assertThat(beneficiaryService.createBeneficiary(requestRuslanDto)).isEqualTo(responseRuslanDto);
@@ -111,7 +111,8 @@ class BeneficiaryServiceTest {
         ResponseBeneficiaryDto responseRuslanDto = new ResponseBeneficiaryDto(1L, "ruslan", "1111", List.of(ruslanAccountDto));
 
         Mockito.when(beneficiaryRepository.save(ruslan)).thenReturn(ruslan);
-        Mockito.when(accountRepository.save(any(Account.class))).thenReturn(ruslanAccount);
+        Mockito.when(accountService.createAccount()).thenReturn(ruslanAccount);
+        Mockito.when(accountService.save(ruslanAccount)).thenReturn(ruslanAccount);
         Mockito.when(mapper.toResponseBeneficiaryDto(ruslan)).thenReturn(responseRuslanDto);
 
         Assertions.assertThat(beneficiaryService.createBeneficiaryAccount(beneficiaryId, requestPin)).isEqualTo(responseRuslanDto);

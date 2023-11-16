@@ -7,22 +7,21 @@ import ru.github.abdullinru.bankapp.bankApp.exception.BeneficiaryNotFoundExcepti
 import ru.github.abdullinru.bankapp.bankApp.mapper.BeneficiaryMapper;
 import ru.github.abdullinru.bankapp.bankApp.model.Account;
 import ru.github.abdullinru.bankapp.bankApp.model.Beneficiary;
-import ru.github.abdullinru.bankapp.bankApp.repository.AccountRepository;
 import ru.github.abdullinru.bankapp.bankApp.repository.BeneficiaryRepository;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BeneficiaryService {
+
+    private final AccountService accountService;
     private final BeneficiaryRepository beneficiaryRepository;
-    private final AccountRepository accountRepository;
     private final BeneficiaryMapper mapper;
 
-    public BeneficiaryService(BeneficiaryRepository beneficiaryRepository, AccountRepository accountRepository, BeneficiaryMapper mapper) {
+    public BeneficiaryService(AccountService accountService, BeneficiaryRepository beneficiaryRepository, BeneficiaryMapper mapper) {
+        this.accountService = accountService;
         this.beneficiaryRepository = beneficiaryRepository;
-        this.accountRepository = accountRepository;
         this.mapper = mapper;
     }
 
@@ -30,7 +29,7 @@ public class BeneficiaryService {
         checkPin(beneficiaryDto.pin());
         checkName(beneficiaryDto.name());
         Beneficiary createBeneficiary = mapper.toBeneficiary(beneficiaryDto);
-        Account createAccount = createAccount();
+        Account createAccount = accountService.createAccount();
         createAccount.setBeneficiary(createBeneficiary);
 
         List<Account> accounts = new ArrayList<>();
@@ -38,7 +37,7 @@ public class BeneficiaryService {
         createBeneficiary.setAccounts(accounts);
 
         beneficiaryRepository.save(createBeneficiary);
-        accountRepository.save(createAccount);
+        accountService.save(createAccount);
 
         return mapper.toResponseBeneficiaryDto(createBeneficiary);
     }
@@ -64,11 +63,11 @@ public class BeneficiaryService {
         checkPin(pin);
         comparePin(pin, findBeneficiary.getPin());
 
-        Account createAccount = createAccount();
+        Account createAccount = accountService.createAccount();
         createAccount.setBeneficiary(findBeneficiary);
         findBeneficiary.getAccounts().add(createAccount);
         beneficiaryRepository.save(findBeneficiary);
-        accountRepository.save(createAccount);
+        accountService.save(createAccount);
         return mapper.toResponseBeneficiaryDto(findBeneficiary);
     }
 
@@ -76,12 +75,5 @@ public class BeneficiaryService {
         if (!pin1.equals(pin2)) {
             throw new IllegalArgumentException("pin code is not match");
         }
-    }
-
-    private Account createAccount() {
-        Account createAccount = new Account();
-        createAccount.setBalance(BigDecimal.ZERO);
-        createAccount.setNumber(createAccount.generateRandomAccountNumber());
-        return createAccount;
     }
 }
