@@ -38,7 +38,7 @@ public class BalanceService {
         if (!isTransfer) {
             History historyLog = new History();
             historyLog.setChangeBalance(amount);
-            historyLog.setReceiveId(accountId);
+            historyLog.setReceiverId(accountId);
             historyLog.setSenderId(null);
             historyLog.setDateTime(LocalDateTime.now());
             historyLog.setType(OperationType.deposit);
@@ -74,7 +74,7 @@ public class BalanceService {
         if (!isTransfer) {
             History historyLog = new History();
             historyLog.setChangeBalance(amount);
-            historyLog.setReceiveId(null);
+            historyLog.setReceiverId(null);
             historyLog.setSenderId(accountId);
             historyLog.setDateTime(LocalDateTime.now());
             historyLog.setType(OperationType.withdraw);

@@ -33,7 +33,7 @@ public class TransferService {
 
         History historyLog = new History();
         historyLog.setChangeBalance(amount);
-        historyLog.setReceiveId(receiverId);
+        historyLog.setReceiverId(receiverId);
         historyLog.setSenderId(senderId);
         historyLog.setDateTime(LocalDateTime.now());
         historyLog.setType(OperationType.transfer);

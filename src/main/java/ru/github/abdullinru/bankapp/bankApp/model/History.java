@@ -20,15 +20,15 @@ public class History {
     @Enumerated(value = EnumType.STRING)
     private OperationType type;
     private Long senderId;
-    private Long receiveId;
+    private Long receiverId;
     private BigDecimal changeBalance;
 
-    public History(Long id, LocalDateTime dateTime, OperationType type, Long senderId, Long receiveId, BigDecimal changeBalance) {
+    public History(Long id, LocalDateTime dateTime, OperationType type, Long senderId, Long receiverId, BigDecimal changeBalance) {
         this.id = id;
         this.dateTime = dateTime;
         this.type = type;
         this.senderId = senderId;
-        this.receiveId = receiveId;
+        this.receiverId = receiverId;
         this.changeBalance = changeBalance;
     }
 
