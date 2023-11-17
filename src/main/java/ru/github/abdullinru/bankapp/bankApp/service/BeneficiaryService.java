@@ -1,5 +1,6 @@
 package ru.github.abdullinru.bankapp.bankApp.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.github.abdullinru.bankapp.bankApp.dto.RequestBeneficiaryDto;
 import ru.github.abdullinru.bankapp.bankApp.dto.ResponseBeneficiaryDto;
@@ -13,17 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BeneficiaryService {
 
     private final AccountService accountService;
     private final BeneficiaryRepository beneficiaryRepository;
     private final BeneficiaryMapper mapper;
-
-    public BeneficiaryService(AccountService accountService, BeneficiaryRepository beneficiaryRepository, BeneficiaryMapper mapper) {
-        this.accountService = accountService;
-        this.beneficiaryRepository = beneficiaryRepository;
-        this.mapper = mapper;
-    }
 
     public ResponseBeneficiaryDto createBeneficiary(RequestBeneficiaryDto beneficiaryDto) {
         checkPin(beneficiaryDto.pin());

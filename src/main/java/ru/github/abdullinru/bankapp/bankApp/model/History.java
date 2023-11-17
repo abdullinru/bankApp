@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
 public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +30,5 @@ public class History {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.changeBalance = changeBalance;
-    }
-
-    public History() {
-
     }
 }

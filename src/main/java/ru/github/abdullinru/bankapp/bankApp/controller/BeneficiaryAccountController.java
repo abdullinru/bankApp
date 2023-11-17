@@ -1,5 +1,6 @@
 package ru.github.abdullinru.bankapp.bankApp.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,11 @@ import ru.github.abdullinru.bankapp.bankApp.service.BeneficiaryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/beneficiary")
+@RequestMapping("/api/beneficiaries")
+@RequiredArgsConstructor
 public class BeneficiaryAccountController {
 
     private final BeneficiaryService beneficiaryService;
-
-    public BeneficiaryAccountController(BeneficiaryService beneficiaryService) {
-        this.beneficiaryService = beneficiaryService;
-    }
 
     @Operation(summary = "Получить всех владельцев счетов",
             description = "")
@@ -57,7 +55,7 @@ public class BeneficiaryAccountController {
                             schema = @Schema(implementation = ResponseBeneficiaryDto.class))),
             @ApiResponse(responseCode = "404", description = "owner is not found by id"),
             @ApiResponse(responseCode = "400", description = "illegal arguments: pin code is not correct or not match")})
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/accounts")
     public ResponseEntity<ResponseBeneficiaryDto> createBeneficiaryAccount(
             @RequestBody String pin, @PathVariable Long id) {
         ResponseBeneficiaryDto result = beneficiaryService.createBeneficiaryAccount(id, pin);

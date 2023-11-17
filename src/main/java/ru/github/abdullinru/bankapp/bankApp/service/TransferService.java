@@ -1,5 +1,6 @@
 package ru.github.abdullinru.bankapp.bankApp.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.github.abdullinru.bankapp.bankApp.dto.ResponseAccountDto;
 import ru.github.abdullinru.bankapp.bankApp.dto.TransferDto;
@@ -14,14 +15,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class TransferService {
     private final BalanceService balanceService;
     private final HistoryRepository historyRepository;
-
-    public TransferService(BalanceService balanceService, HistoryRepository historyRepository) {
-        this.balanceService = balanceService;
-        this.historyRepository = historyRepository;
-    }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public ResponseAccountDto transfer(TransferDto transferDto) {

@@ -1,5 +1,7 @@
 package ru.github.abdullinru.bankapp.bankApp.controller;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,14 +15,12 @@ import ru.github.abdullinru.bankapp.bankApp.service.HistoryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/history")
+@RequestMapping("api/histories")
+@RequiredArgsConstructor
+
 public class AccountHistoryController {
 
     private final HistoryService historyService;
-
-    public AccountHistoryController(HistoryService historyService) {
-        this.historyService = historyService;
-    }
 
     @Operation(summary = "Показать историю финансовых операций по выбранному счету",
             description = "")
@@ -30,7 +30,7 @@ public class AccountHistoryController {
                             schema = @Schema(implementation = ResponseAccountDto.class))),
             @ApiResponse(responseCode = "400", description = "incorrect arguments"),
             @ApiResponse(responseCode = "404", description = "account is not found  by id")})
-    @GetMapping("/{id}")
+    @GetMapping("/accounts/{id}")
     public List<ResponseHistoryDto> getAccountHistory(@PathVariable long id) {
 
         return historyService.getAccountHistory(id);

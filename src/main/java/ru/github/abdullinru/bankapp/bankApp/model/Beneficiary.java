@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
 @NamedEntityGraph(name = "beneficiary_entity-graph", attributeNodes = @NamedAttributeNode("accounts"))
 public class Beneficiary {
     @Id
@@ -27,7 +28,4 @@ public class Beneficiary {
         this.pin = pin;
     }
 
-    public Beneficiary() {
-
-    }
 }

@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +23,7 @@ public class Account {
     @JoinColumn(name = "owner_id")
     private Beneficiary beneficiary;
 
-    public Account(String number, BigDecimal balance, Beneficiary beneficiary) {
-        this.number = number;
-        this.balance = balance;
-        this.beneficiary = beneficiary;
-    }
+
 
     public String generateRandomAccountNumber() {
         StringBuilder result = new StringBuilder();
@@ -36,7 +33,9 @@ public class Account {
         }
         return result.toString().trim();
     }
-    public Account() {
-
+    public Account(String number, BigDecimal balance, Beneficiary beneficiary) {
+        this.number = number;
+        this.balance = balance;
+        this.beneficiary = beneficiary;
     }
 }

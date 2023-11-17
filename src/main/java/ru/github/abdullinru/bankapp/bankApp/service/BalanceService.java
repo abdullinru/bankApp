@@ -1,5 +1,6 @@
 package ru.github.abdullinru.bankapp.bankApp.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +17,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class BalanceService {
     private final AccountRepository accountRepository;
     private final HistoryRepository historyRepository;
     private final BeneficiaryMapper mapper;
 
-    public BalanceService(AccountRepository accountRepository, HistoryRepository historyRepository, BeneficiaryMapper mapper) {
-        this.accountRepository = accountRepository;
-        this.historyRepository = historyRepository;
-        this.mapper = mapper;
-    }
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public ResponseAccountDto deposit(Long accountId, BigDecimal amount, boolean isTransfer) {
         chechAmount(amount);
