@@ -11,6 +11,7 @@ import ru.github.abdullinru.bankapp.bankApp.dto.AccountDto;
 import ru.github.abdullinru.bankapp.bankApp.dto.ResponseBeneficiaryDto;
 import ru.github.abdullinru.bankapp.bankApp.dto.ResponseHistoryDto;
 import ru.github.abdullinru.bankapp.bankApp.mapper.BeneficiaryMapper;
+import ru.github.abdullinru.bankapp.bankApp.mapper.HistoryMapper;
 import ru.github.abdullinru.bankapp.bankApp.model.Beneficiary;
 import ru.github.abdullinru.bankapp.bankApp.model.History;
 import ru.github.abdullinru.bankapp.bankApp.model.OperationType;
@@ -30,7 +31,7 @@ class HistoryServiceTest {
     private HistoryRepository historyRepository;
 
     @Mock
-    private BeneficiaryMapper mapper;
+    private HistoryMapper mapper;
 
     @InjectMocks
     private HistoryService historyService;

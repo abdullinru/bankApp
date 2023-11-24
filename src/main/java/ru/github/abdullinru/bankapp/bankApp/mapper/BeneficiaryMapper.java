@@ -17,14 +17,11 @@ public interface BeneficiaryMapper {
     ResponseBeneficiaryDto toResponseBeneficiaryDto(Beneficiary beneficiary);
 
     List<AccountDto> toListAccountDto(List<Account> accounts);
+    @Mapping(source = "beneficiary.name", target = "beneficiaryName")
+    ResponseAccountDto toResponseAccountDto(Account account);
 
     List<ResponseBeneficiaryDto> toListBeneficiaryDto(List<Beneficiary> beneficiaries);
 
 
-    @Mapping(source = "beneficiary.name", target = "beneficiaryName")
-    ResponseAccountDto toResponseAccountDto(Account account);
 
-    ResponseHistoryDto toResponseHistoryDto(History history);
-
-    List<ResponseHistoryDto> toListResponseHistoryDto(List<History> histories);
 }
