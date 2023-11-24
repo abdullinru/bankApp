@@ -37,7 +37,6 @@ class BalanceServiceTest {
     @Test
     public void depositPositiveTest() {
 
-        boolean isTransfer = false;
         long accountId = 1L;
         BigDecimal amount = BigDecimal.valueOf(10);
         BigDecimal currentBalance = BigDecimal.valueOf(100);
@@ -54,25 +53,23 @@ class BalanceServiceTest {
 
         Mockito.when(mapper.toResponseAccountDto(ruslanAccount)).thenReturn(responseAccountDto);
 
-        Assertions.assertThat(balanceService.deposit(accountId, amount, isTransfer)).isEqualTo(responseAccountDto);
+        Assertions.assertThat(balanceService.deposit(accountId, amount)).isEqualTo(responseAccountDto);
     }
 
     @Test
     public void depositNegativeTestAmountIncorrect() {
 
-        boolean isTransfer = false;
         long accountId = 1L;
         BigDecimal amount = BigDecimal.valueOf(-100);
         BigDecimal currentBalance = BigDecimal.valueOf(100);
         BigDecimal updateBalance = BigDecimal.valueOf(110);
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> balanceService.deposit(accountId, amount, isTransfer));
+                .isThrownBy(() -> balanceService.deposit(accountId, amount));
     }
     @Test
     public void depositNegativeTestAccountNotFound() {
 
-        boolean isTransfer = false;
         long accountId = 1L;
         BigDecimal amount = BigDecimal.valueOf(10);
         BigDecimal currentBalance = BigDecimal.valueOf(100);
@@ -80,13 +77,12 @@ class BalanceServiceTest {
         Mockito.when(accountRepository.findById(accountId)).thenReturn(Optional.empty());
 
         Assertions.assertThatExceptionOfType(AccountNotFoundException.class)
-                .isThrownBy(() -> balanceService.deposit(accountId, amount, isTransfer));
+                .isThrownBy(() -> balanceService.deposit(accountId, amount));
     }
 
     @Test
     public void withdrawPositiveTest() {
 
-        boolean isTransfer = false;
         long accountId = 1L;
         String requestPin = "1111";
         String pin = "1111";
@@ -105,13 +101,12 @@ class BalanceServiceTest {
 
         Mockito.when(mapper.toResponseAccountDto(ruslanAccount)).thenReturn(responseAccountDto);
 
-        Assertions.assertThat(balanceService.withdraw(accountId, amount, requestPin,  isTransfer)).isEqualTo(responseAccountDto);
+        Assertions.assertThat(balanceService.withdraw(accountId, amount, requestPin)).isEqualTo(responseAccountDto);
     }
 
     @Test
     public void withdrawNegativeTestAmountIncorrect() {
 
-        boolean isTransfer = false;
         long accountId = 1L;
         String requestPin = "1111";
         BigDecimal amount = BigDecimal.valueOf(-100);
@@ -119,12 +114,11 @@ class BalanceServiceTest {
         BigDecimal updateBalance = BigDecimal.valueOf(90);
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> balanceService.withdraw(accountId, amount, requestPin, isTransfer));
+                .isThrownBy(() -> balanceService.withdraw(accountId, amount, requestPin));
     }
     @Test
     public void withdrawNegativeTestAccountNotFound() {
 
-        boolean isTransfer = false;
         long accountId = 1L;
         BigDecimal amount = BigDecimal.valueOf(10);
         String requestPin = "1111";
@@ -133,12 +127,11 @@ class BalanceServiceTest {
         Mockito.when(accountRepository.findById(accountId)).thenReturn(Optional.empty());
 
         Assertions.assertThatExceptionOfType(AccountNotFoundException.class)
-                .isThrownBy(() -> balanceService.withdraw(accountId, amount, requestPin, isTransfer));
+                .isThrownBy(() -> balanceService.withdraw(accountId, amount, requestPin));
     }
     @Test
     public void withdrawNegativeTestPinNotMatch() {
 
-        boolean isTransfer = false;
         long accountId = 1L;
         String requestPin = "2222";
         String pin = "1111";
@@ -151,12 +144,11 @@ class BalanceServiceTest {
         Mockito.when(accountRepository.findById(accountId)).thenReturn(Optional.of(ruslanAccount));
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> balanceService.withdraw(accountId, amount, requestPin, isTransfer));
+                .isThrownBy(() -> balanceService.withdraw(accountId, amount, requestPin));
     }
     @Test
     public void withdrawNegativeTestNotEnoughMoney() {
 
-        boolean isTransfer = false;
         long accountId = 1L;
         String requestPin = "2222";
         String pin = "1111";
@@ -169,7 +161,7 @@ class BalanceServiceTest {
         Mockito.when(accountRepository.findById(accountId)).thenReturn(Optional.of(ruslanAccount));
 
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> balanceService.withdraw(accountId, amount, requestPin, isTransfer));
+                .isThrownBy(() -> balanceService.withdraw(accountId, amount, requestPin));
     }
 
 }

@@ -15,7 +15,6 @@ import ru.github.abdullinru.bankapp.bankApp.dto.ResponseAccountDto;
 import ru.github.abdullinru.bankapp.bankApp.dto.TransferDto;
 import ru.github.abdullinru.bankapp.bankApp.dto.WithdrawDto;
 import ru.github.abdullinru.bankapp.bankApp.service.BalanceService;
-import ru.github.abdullinru.bankapp.bankApp.service.TransferService;
 
 import java.math.BigDecimal;
 
@@ -24,7 +23,6 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class BankOperationController {
     private final BalanceService balanceService;
-    private final TransferService transferService;
 
     @Operation(summary = "Внести депозит на баланс аккаунта",
             description = "")
@@ -38,7 +36,7 @@ public class BankOperationController {
     public ResponseAccountDto deposit(@RequestBody DepositDto depositDto) {
         Long receiverId = depositDto.accountId();
         BigDecimal depositAmount = depositDto.amount();
-        return balanceService.deposit(receiverId, depositAmount, false);
+        return balanceService.deposit(receiverId, depositAmount);
     }
 
     @Operation(summary = "Снять деньги с баланса аккаунта",
@@ -54,7 +52,7 @@ public class BankOperationController {
         Long senderId = withdrawDto.accountId();
         BigDecimal withdrawAmount = withdrawDto.amount();
         String pin = withdrawDto.pin();
-        return balanceService.withdraw(senderId, withdrawAmount, pin, false);
+        return balanceService.withdraw(senderId, withdrawAmount, pin);
     }
 
     @Operation(summary = "Перевести деньги с баланса одного аккаунта на баланс другого аккаунта",
@@ -67,6 +65,6 @@ public class BankOperationController {
             @ApiResponse(responseCode = "400", description = "incorrect pin  or not enough money")})
     @PatchMapping("/transfer")
     public ResponseAccountDto transfer(@RequestBody TransferDto transferDto) {
-        return transferService.transfer(transferDto);
+        return balanceService.transfer(transferDto);
     }
 }

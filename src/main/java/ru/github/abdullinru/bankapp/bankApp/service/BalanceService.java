@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.github.abdullinru.bankapp.bankApp.dto.ResponseAccountDto;
+import ru.github.abdullinru.bankapp.bankApp.dto.TransferDto;
 import ru.github.abdullinru.bankapp.bankApp.exception.AccountNotFoundException;
 import ru.github.abdullinru.bankapp.bankApp.mapper.BeneficiaryMapper;
 import ru.github.abdullinru.bankapp.bankApp.model.Account;
@@ -24,14 +25,13 @@ public class BalanceService {
     private final BeneficiaryMapper mapper;
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public ResponseAccountDto deposit(Long accountId, BigDecimal amount, boolean isTransfer) {
+    public ResponseAccountDto deposit(Long accountId, BigDecimal amount) {
         chechAmount(amount);
         Account findAccount = accountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException("account is not found"));
         findAccount.setBalance(findAccount.getBalance().add(amount));
         accountRepository.save(findAccount);
 
-        if (!isTransfer) {
             History historyLog = new History(
                     LocalDateTime.now(),
                     OperationType.deposit,
@@ -39,7 +39,6 @@ public class BalanceService {
                     accountId,
                     amount);
             historyRepository.save(historyLog);
-        }
 
         return mapper.toResponseAccountDto(findAccount);
     }
@@ -51,7 +50,7 @@ public class BalanceService {
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public ResponseAccountDto withdraw(Long accountId, BigDecimal amount, String pin, boolean isTransfer) {
+    public ResponseAccountDto withdraw(Long accountId, BigDecimal amount, String pin) {
         chechAmount(amount);
         checkPin(pin);
         Account findAccount = accountRepository.findById(accountId)
@@ -65,8 +64,6 @@ public class BalanceService {
 
         accountRepository.save(findAccount);
 
-
-        if (!isTransfer) {
             History historyLog = new History(
                     LocalDateTime.now(),
                     OperationType.withdraw,
@@ -74,7 +71,6 @@ public class BalanceService {
                     null,
                     amount);
             historyRepository.save(historyLog);
-        }
 
         return mapper.toResponseAccountDto(findAccount);
     }
@@ -88,5 +84,46 @@ public class BalanceService {
         if (!pin1.equals(pin2)) {
             throw new IllegalArgumentException("PIN codes do not match");
         }
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public ResponseAccountDto transfer(TransferDto transferDto) {
+        Long senderId = transferDto.senderId();
+        Long receiverId = transferDto.receiverId();
+        BigDecimal amount = transferDto.amount();
+        String pin = transferDto.pin();
+
+        chechAmount(amount);
+        checkPin(pin);
+
+        //withdraw
+        Account findAccount = accountRepository.findById(senderId)
+                .orElseThrow(() -> new AccountNotFoundException("Sender Account is not found"));
+
+        comparePinCodes(pin, findAccount.getBeneficiary().getPin());
+        if (findAccount.getBalance().compareTo(amount) < 0) {
+            throw new IllegalArgumentException("not enouht money for withdraw");
+        }
+        findAccount.setBalance(findAccount.getBalance().subtract(amount));
+
+        accountRepository.save(findAccount);
+
+        //  deposit
+        findAccount = accountRepository.findById(senderId)
+                .orElseThrow(() -> new AccountNotFoundException("receiver account is not found"));
+        findAccount.setBalance(findAccount.getBalance().add(amount));
+        accountRepository.save(findAccount);
+
+        // write history
+        History historyLog = new History(
+                LocalDateTime.now(),
+                OperationType.transfer,
+                senderId,
+                receiverId,
+                amount);
+        historyRepository.save(historyLog);
+
+        return mapper.toResponseAccountDto(findAccount);
+
     }
 }
